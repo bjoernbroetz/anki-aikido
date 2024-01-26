@@ -1,76 +1,80 @@
 SUWARI WAZA:
   - shōmen uchi:
-          - gokyō
+      - {name: gokyō, start: "00:09:32", end: "00:09:50"}
   - yokomen uchi:
-          - gokyō 
-          - kote gaeshi
+      - {name: gokyō, start: "00:09:50", end: "00:10:03"}
+      - {name: kote gaeshi, start: "00:10:03", end: "00:10:18"}
 HAnMI HAnDAcHI WAZA:
   - gyaku hanmi katate dori:
-          - ikkyō
-          - nikyō
-          - sankyō
-          - yonkyō
-  - shōmen uchi ikkyō:
-          - nikyō
-          - sankyō
-          - yonkyō
-          - irimi nage
-          - kote gaeshi
-  - ushiro ryō kata dori: 
-          - ikkyō
-          - nikyō
-          - sankyō
-          - yonkyō
-          - kokyū nage
-TAcHI WAZA:
-  - gyaku hanmi katate dori: 
-          - sumi otoshi
-  - mae ryō kata dori:
-          - kokyū nage
-  - muna dori:
-          - shihō nage
-  - katate ryōte dori (morote dori):
-          - jūji garami
-          - shōmen uchi gokyō
-          - kokyū nage
-          - koshi nage
-  - yokomen uchi gokyō:
-          - kokyū nage
-          - koshi nage
-  - jōdan tsuki ikkyō:
-          - nikyō
-          - sankyō
-          - yonkyō
-          - shihō nage
-          - irimi nage
-          - hiji kime osae
-  - chūdan tsuki:
-          - ikkyō
-          - nikyō
-          - sankyō
-          - yonkyō
-          - irimi nage
-          - kote gaeshi
-          - soto kaiten nage
-          - uchi kaiten nage
-  - ushiro ryōte dori:
-          -  sokumen irimi nage
-          - jūji garami
-          - koshi nage
+      - {name: ikkyō, start: "00:10:18", end: "00:10:40"}
+      - {name: nikyō, start: "00:10:40", end: "00:11:05"}
+      - {name: sankyō, start: "00:11:05", end: "00:11:32"}
+      - {name: yonkyō, start: "00:11:32", end: "00:11:54"}
+  - shōmen uchi:
+      - {name: ikkyō, start: "00:11:54", end: "00:12:12"}
+      - {name: nikyō, start: "00:12:12", end: "00:12:33"}
+      - {name: sankyō, start: "00:12:33", end: "00:12:54"}
+      - {name: yonkyō, start: "00:12:54", end: "00:13:11"}
+      - {name: irimi nage, start: "00:13:11", end: "00:13:20"}
+      - {name: kote gaeshi, start: "00:13:20", end: "00:13:30"}
   - ushiro ryō kata dori:
-          - ikkyō
-          - nikyō
-          - sankyō
-          - yonkyō
-          - aiki otoshi
+      - {name: ikkyō, start: "00:13:30", end: "00:13:45"}
+      - {name: nikyō, start: "00:13:45", end: "00:13:57"}
+      - {name: sankyō, start: "00:13:57", end: "00:14:10"}
+      - {name: yonkyō, start: "00:14:10", end: "00:14:20"}
+      - {name: kokyū nage, start: "00:14:20", end: "00:14:29"}
+TAcHI WAZA:
+  - gyaku hanmi katate dori:
+      - {name: sumi otoshi, start: "00:00:00", end: "00:00:05"}
+  - mae ryō kata dori:
+      - {name: kokyū nage, start: "00:00:05", end: "00:00:09"}
+  - muna dori:
+      - {name: shihō nage, start: "00:00:09", end: "00:00:15"}
+  - katate ryōte dori (morote dori):
+      - {name: jūji garami, start: "00:00:15", end: "00:00:22"}
+  - shōmen uchi:
+      - {name: gokyō, start: "00:00:22", end: "00:00:34"}
+      - {name: kokyū nage, start: "00:00:34", end: "00:00:41"}
+      - {name: koshi nage, start: "00:00:41", end: "00:00:48"}
+  - yokomen uchi:
+      - {name: gokyō, start: "00:00:48", end: "00:01:02"}
+      - {name: kokyū nage, start: "00:01:02", end: "00:01:09"}
+      - {name: koshi nage, start: "00:01:09", end: "00:01:15"}
+  - jōdan tsuki:
+      - {name: ikkyō, start: "00:01:15", end: "00:01:35"}
+      - {name: nikyō, start: "00:01:35", end: "00:01:59"}
+      - {name: sankyō, start: "00:01:59", end: "00:02:25"}
+      - {name: yonkyō, start: "00:02:25", end: "00:02:44"}
+      - {name: shihō nage, start: "00:02:44", end: "00:02:53"}
+      - {name: irimi nage, start: "00:02:53", end: "00:03:01"}
+      - {name: hiji kime osae, start: "00:03:01", end: "00:03:19"}
+  - chūdan tsuki:
+      - {name: ikkyō, start: "00:03:19", end: "00:03:40"}
+      - {name: nikyō, start: "00:03:40", end: "00:04:03"}
+      - {name: sankyō, start: "00:04:03", end: "00:04:26"}
+      - {name: yonkyō, start: "00:04:26", end: "00:04:47"}
+      - {name: irimi nage, start: "00:04:47", end: "00:04:56"}
+      - {name: kote gaeshi, start: "00:04:56", end: "00:05:07"}
+      - {name: soto kaiten nage, start: "00:05:07", end: "00:05:14"}
+      - {name: uchi kaiten nage, start: "00:05:14", end: "00:05:22"}
+  - ushiro ryōte dori:
+      - {name: sokumen irimi nage, start: "00:05:22", end: "00:05:32"}
+      - {name: jūji garami, start: "00:05:32", end: "00:05:39"}
+      - {name: koshi nage, start: "00:05:39", end: "00:05:47"}
+  - ushiro ryō kata dori:
+      - {name: ikkyō, start: "00:05:47", end: "00:06:12"}
+      - {name: nikyō, start: "00:06:12", end: "00:06:40"}
+      - {name: sankyō, start: "00:06:40", end: "00:07:03"}
+      - {name: yonkyō, start: "00:07:03", end: "00:07:26"}
+      - {name: aiki otoshi, start: "00:07:26", end: "00:07:34"}
   - ushiro ryō hiji dori:
-          - ikkyō
-          - kokyū nage
+      - {name: ikkyō, start: "00:07:34", end: "00:07:58"}
+      - {name: kokyū nage, start: "00:07:58", end: "00:08:05"}
   - ushiro eri dori:
-          - ikkyō
-          - kote gaeshi
-          - shihō nage
+      - {name: ikkyō, start: "00:08:05", end: "00:08:20"}
+      - {name: kote gaeshi, start: "00:08:20", end: "00:08:33"}
+      - {name: shihō nage, start: "00:08:33", end: "00:08:44"}
   - ushiro katate dori kubi shime:
-          - ikkyō
-          - kote gaeshi
-          - shihō nage
+      - {name: ikkyō, start: "00:08:44", end: "00:09:08"}
+      - {name: kote gaeshi, start: "00:09:08", end: "00:09:21"}
+      - {name: shihō nage, start: "00:09:21", end: "00:09:32"}
