@@ -1,10 +1,10 @@
-SUWARI WAZA:
+suwari waza:
   - shōmen uchi:
       - {name: gokyō, start: "00:09:32", end: "00:09:50"}
   - yokomen uchi:
       - {name: gokyō, start: "00:09:50", end: "00:10:03"}
       - {name: kote gaeshi, start: "00:10:03", end: "00:10:18"}
-HAnMI HAnDAcHI WAZA:
+hanmi handachi waza:
   - gyaku hanmi katate dori:
       - {name: ikkyō, start: "00:10:18", end: "00:10:40"}
       - {name: nikyō, start: "00:10:40", end: "00:11:05"}
@@ -23,7 +23,7 @@ HAnMI HAnDAcHI WAZA:
       - {name: sankyō, start: "00:13:57", end: "00:14:10"}
       - {name: yonkyō, start: "00:14:10", end: "00:14:20"}
       - {name: kokyū nage, start: "00:14:20", end: "00:14:29"}
-TAcHI WAZA:
+tachi waza:
   - gyaku hanmi katate dori:
       - {name: sumi otoshi, start: "00:00:00", end: "00:00:05"}
   - mae ryō kata dori:
