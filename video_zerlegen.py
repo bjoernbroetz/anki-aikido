@@ -1,5 +1,6 @@
 import yaml
 import genanki
+import subprocess
 
 INFILE = "data/Aikido-Schule_Bodo-Roedel_1-Kyu-Prüfungsprogramm.mp4"
 
@@ -43,6 +44,15 @@ def create_aikido_techniques(yaml_data):
                     _techniques.append(instance)
 
     return _techniques
+
+def split_video_by_techniques(techniques):
+    for technique in aikido_techniques:
+        # ffmpeg -i input.mp4 -ss 00:05:10 -to 00:15:30 -c:v copy -c:a copy output2.mp4
+        if technique.start == "00:00:00":
+            subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-to", f"{technique.end}", "-c:v", "copy", "-c:a", "copy", f"videos/{technique.mp4name()}"])
+        else:
+            subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-ss", f"{technique.start}", "-to", f"{technique.end}", "-c:v", "copy", "-c:a", "copy", f"videos/{technique.mp4name()}"])
+
 
 def create_ffmpeg_commandline(techniques):
     for technique in aikido_techniques:
@@ -91,7 +101,8 @@ if __name__ == "__main__":
     yaml_data = read_yaml_file(filepath_to_config)
 
     aikido_techniques = create_aikido_techniques(yaml_data)
-    create_ffmpeg_commandline(aikido_techniques)
+    split_video_by_techniques(aikido_techniques)
+    #create_ffmpeg_commandline(aikido_techniques)
     create_deck(aikido_techniques, init_anki_model())
 
 
