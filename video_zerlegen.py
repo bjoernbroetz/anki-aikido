@@ -47,7 +47,10 @@ def create_aikido_techniques(yaml_data):
 def create_ffmpeg_commandline(techniques):
     for technique in aikido_techniques:
         # ffmpeg -i input.mp4 -ss 00:05:10 -to 00:15:30 -c:v copy -c:a copy output2.mp4
-        print(f"ffmpeg -i {INFILE} -ss {technique.start} -to {technique.end} -c:v copy -c:a copy {technique.mp4name()}")
+        if technique.start == "00:00:00":
+            print(f"ffmpeg -i {INFILE} -to {technique.end} -c:v copy -c:a copy {technique.mp4name()}")
+        else:
+            print(f"ffmpeg -i {INFILE} -ss {technique.start} -to {technique.end} -c:v copy -c:a copy {technique.mp4name()}")
 
 
 def create_deck(techniques, my_model):
