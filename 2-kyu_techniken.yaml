@@ -1,0 +1,64 @@
+suwari waza:
+  - gyaku hanmi katate dori: 
+  - {name: yonkyō, start:"", end: ""}
+  - shōmen uchi:
+    - {name: yonkyō, start:"", end: ""}
+  - yokomen uchi ikkyō: 
+    - {name: nikyō, start:"", end: ""}
+    - {name: sankyō, start:"", end: ""}
+    - {name: yonkyō, start:"", end: ""}
+    - {name: irimi nage, start:"", end: ""}
+hanmi handachi waza:
+  - gyaku hanmi katate dori: 
+    - {name: kote gaeshi, start:"", end: ""}
+    - {name: soto kaiten nage, start:"", end: ""}
+  - ryōte dori:
+    - {name: shihō nage, start:"", end: ""}
+  - shōmen uchi: 
+    - {name: soto kaiten nage, start:"", end: ""}
+tachi waza:
+  - ai hanmi katate dori:
+    - {name: koshi nage, start:"", end: ""}
+  - gyaku hanmi katate dori:
+    - {name: yonkyō, start:"", end: ""}
+    - {name: koshi nage, start:"", end: ""}
+    - {name: kokyū nage, start:"", end: ""}
+  - ryōte dori:
+    - {name: kote gaeshi, start:"", end: ""}
+    - {name: ude kime nage, start:"", end: ""}
+  - katate ryōte dori (morote dori): 
+    - {name: ikkyō, start:"", end: ""}
+    - {name: nikyō, start:"", end: ""}
+    - {name: sankyō, start:"", end: ""}
+    - {name: yonkyō, start:"", end: ""}
+    - {name: shihō nage, start:"", end: ""}
+    - {name: kote gaeshi, start:"", end: ""}
+    - {name: irimi nage, start:"", end: ""}
+    - {name: kokyū nage, start:"", end: ""}
+  - kata dori men uchi:
+    - {name: ikkyō, start:"", end: ""}
+    - {name: nikyō, start:"", end: ""}
+    - {name: sankyō, start:"", end: ""}
+    - {name: yonkyō, start:"", end: ""}
+    - {name: shihō nage, start:"", end: ""}
+    - {name: kote gaeshi, start:"", end: ""}
+    - {name: irimi nage, start:"", end: ""}
+    - {name: kokyū nage, start:"", end: ""}
+  - shōmen uchi: 
+    - {name: yonkyō, start:"", end: ""}
+    - {name: shihō nage, start:"", end: ""}
+    - {name: soto kaiten nage, start:"", end: ""}
+    - {name: uchi kaiten nage, start:"", end: ""}
+  - yokomen uchi:
+    - {name: ikkyō, start:"", end: ""}
+    - {name: nikyō, start:"", end: ""}
+    - {name: sankyō, start:"", end: ""}
+    - {name: yonkyō, start:"", end: ""}
+  - ushiro ryōte dori:
+    - {name: yonkyō, start:"", end: ""}
+    - {name: irimi nage, start:"", end: ""}
+    - {name: ude kime nage, start:"", end: ""}
+    - {name: shihō nage, start:"", end: ""}
+  - ushiro ryō kata dori:
+    - {name: sokumen irimi nage, start:"", end: ""}
+    - {name: kokyū nage, start:"", end: ""}
