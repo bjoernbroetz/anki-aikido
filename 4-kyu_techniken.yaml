@@ -1,28 +1,28 @@
 suwari waza:
   - ai hanmi katate dori:
-    - ikkyō
-    - irimi nage
+    - {name: ikkyō, start: "", end: ""}
+    - {name: irimi nage, start: "", end: ""}
   - shōmen uchi:
-    - ikkyō
-    - irimi nage
+    - {name: ikkyō, start: "", end: ""}
+    - {name: irimi nage, start: "", end: ""}
 tachi waza:
   - ai hanmi katate dori:
-    - nikyō
-    - ude kime nage
+    - {name: nikyō, start: "", end: ""}
+    - {name: ude kime nage, start: "", end: ""}
   - gyaku hanmi katate dori: 
-    - ikkyō
-    - nikyō
-    - shihō nage
-    - kote gaeshi
-    - irimi nage
-    - sokumen irimi nage
+    - {name: ikkyō, start: "", end: ""}
+    - {name: nikyō, start: "", end: ""}
+    - {name: shihō nage, start: "", end: ""}
+    - {name: kote gaeshi, start: "", end: ""}
+    - {name: irimi nage, start: "", end: ""}
+    - {name: sokumen irimi nage, start: "", end: ""}
   - uchi kaiten nage:
-    - ude kime nage
-    - tenchi nage
+    - {name: ude kime nage, start: "", end: ""}
+    - {name: tenchi nage, start: "", end: ""}
   - kata dori:
-    - ikkyō
-    - nikyō
+    - {name: ikkyō, start: "", end: ""}
+    - {name: nikyō, start: "", end: ""}
   - ryōte dori:
-    - tenchi nage
+    - {name: tenchi nage, start: "", end: ""}
   - shōmen uchi:
-    - nikyō
+    - {name: nikyō, start: "", end: ""}

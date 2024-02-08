@@ -1,13 +1,12 @@
 suwari waza:
   - ryōte dori:
-    - kokyū hō
+    - {name: kokyū hō, start: "", end: ""}
 tachi waza:
   - ai hanmi katate dori:
-    - ikkyō
-    - shihō nage
-    - irimi nage
-    - kote gaeshi
+    - {name: ikkyō, start: "", end: ""}
+    - {name: irimi nage, start: "", end: ""}
+    - {name: kote gaeshi, start: "", end: ""}
   - shōmen uchi: 
-    - ikkyō
-    - irimi nage
-    - kote gaeshi
+    - {name: ikkyō, start: "", end: ""}
+    - {name: irimi nage, start: "", end: ""}
+    - {name: kote gaeshi, start: "", end: ""}
