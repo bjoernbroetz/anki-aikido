@@ -2,7 +2,8 @@ import yaml
 import genanki
 import subprocess
 
-INFILE = "data/Aikido-Schule_Bodo-Roedel_1-Kyu-Prüfungsprogramm.mp4"
+INFILE = "data/Aikido-Schule_Bodo-Roedel_2-Kyu-Prüfungsprogramm.mp4"
+VIDEO_FOLDER = "videos2"
 
 class AikidoTechnique:
     def __init__(self, standing_position, attack, name, start, end):
@@ -49,9 +50,9 @@ def split_video_by_techniques(techniques):
     for technique in aikido_techniques:
         # ffmpeg -i input.mp4 -ss 00:05:10 -to 00:15:30 -c:v copy -c:a copy output2.mp4
         if technique.start == "00:00:00":
-            subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-to", f"{technique.end}", "-c:v", "copy", "-c:a", "copy", f"videos/{technique.mp4name()}"])
+            subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-to", f"{technique.end}", "-c:v", "copy", "-c:a", "copy", f"{VIDEO_FOLDER}/{technique.mp4name()}"])
         else:
-            subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-ss", f"{technique.start}", "-to", f"{technique.end}", "-c:v", "copy", "-c:a", "copy", f"videos/{technique.mp4name()}"])
+            subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-ss", f"{technique.start}", "-to", f"{technique.end}", "-c:v", "copy", "-c:a", "copy", f"{VIDEO_FOLDER}/{technique.mp4name()}"])
 
 
 def create_ffmpeg_commandline(techniques):
@@ -69,7 +70,7 @@ def create_deck(techniques, my_model):
     for technique in techniques: 
         my_note = genanki.Note(model=my_model, fields=[f"{technique.full_name()}", f"[sound:{technique.mp4name()}]"])
         my_deck.add_note(my_note)
-        videos.append(f"videos/{technique.mp4name()}")
+        videos.append(f"{VIDEO_FOLDER}/{technique.mp4name()}")
     pack = genanki.Package(my_deck)
     pack.media_files = videos
     pack.write_to_file("output.apkg")
@@ -97,7 +98,7 @@ def init_anki_model():
 
 
 if __name__ == "__main__":
-    filepath_to_config = "1-kyu_techniken.yaml" 
+    filepath_to_config = "2-kyu_techniken.yaml" 
     yaml_data = read_yaml_file(filepath_to_config)
 
     aikido_techniques = create_aikido_techniques(yaml_data)
