@@ -1,41 +1,40 @@
 suwari waza:
   - gyaku hanmi katate dori:
-    - ikkyō
-    - nikyō
-    - sankyō
-    - irimi nage
+    - {name: ikkyō, start: "", end: ""}
+    - {name: nikyō, start: "", end: ""}
+    - {name: sankyō, start: "", end: ""}
+    - {name: irimi nage, start: "", end: ""}
   - kata dori:
-    - ikkyō
-    - nikyō
-    - sankyō
+    - {name: ikkyō, start: "", end: ""}
+    - {name: nikyō, start: "", end: ""}
+    - {name: sankyō, start: "", end: ""}
   - shōmen uchi: 
-    - nikyō
-    - sankyō
+    - {name: nikyō, start: "", end: ""}
+    - {name: sankyō, start: "", end: ""}
 hanmi handachi waza:
   - gyaku hanmi katate dori: 
-    - shihō nage
-    - uchi kaiten nage
+    - {name: shihō nage, start: "", end: ""}
+    - {name: uchi kaiten nage, start: "", end: ""}
 tachi waza:
   - gyaku hanmi katate dori:
-    - sankyō
-    - ude garami
+    - {name: sankyō, start: "", end: ""}
+    - {name: ude garami, start: "", end: ""}
   - kata dori:
-    - sankyō
+    - {name: sankyō, start: "", end: ""}
   - ryōte dori: 
-    - ikkyō
-    - shihō nage
-    - irimi nage
+    - {name: ikkyō, start: "", end: ""}
+    - {name: shihō nage, start: "", end: ""}
+    - {name: irimi nage, start: "", end: ""}
   - shōmen uchi: 
-    - sankyō
+    - {name: sankyō, start: "", end: ""}
   - yokomen uchi:
-    - kote gaeshi
-    - shihō nage
-    - irimi nage
-    - ude kime nage
+    - {name: kote gaeshi, start: "", end: ""}
+    - {name: shihō nage, start: "", end: ""}
+    - {name: irimi nage, start: "", end: ""}
+    - {name: ude kime nage, start: "", end: ""}
   - ushiro ryōte dori: 
-    - ikkyō
-    - nikyō
-    - sankyō
-    - kote gaeshi
-    - kokyū nage
-
+    - {name: ikkyō, start: "", end: ""}
+    - {name: nikyō, start: "", end: ""}
+    - {name: sankyō, start: "", end: ""}
+    - {name: kote gaeshi, start: "", end: ""}
+    - {name: kokyū nage, start: "", end: ""}
