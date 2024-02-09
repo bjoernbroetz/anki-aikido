@@ -18,9 +18,9 @@ tachi waza:
     - {name: tenchi nage, start: "00:02:00", end: "00:02:07"}
     - {name: uchi kaiten nage, start: "00:02:07", end: "00:02:16"}
     - {name: ude kime nage, start: "00:02:16", end: "00:02:27"}
-    - {name: sokumen irimi nage, start: "00:02:27", end: "00:03:34"}
+    - {name: sokumen irimi nage, start: "00:02:27", end: "00:02:34"}
   - kata dori:
-    - {name: ikkyō, start: "00:03:34", end: "00:02:54"}
+    - {name: ikkyō, start: "00:02:34", end: "00:02:54"}
     - {name: nikyō, start: "00:02:54", end: "00:03:20"}
   - ryōte dori:
     - {name: tenchi nage, start: "00:03:20", end: "00:03:27"}
