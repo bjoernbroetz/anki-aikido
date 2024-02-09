@@ -2,8 +2,7 @@ import yaml
 import genanki
 import subprocess
 
-INFILE = "data/Aikido-Schule_Bodo-Roedel_2-Kyu-Prüfungsprogramm.mp4"
-VIDEO_FOLDER = "videos2"
+VIDEO_FOLDER = "videos"
 
 class AikidoTechnique:
     def __init__(self, standing_position, attack, name, start, end):
@@ -47,7 +46,7 @@ def create_aikido_techniques(yaml_data):
     return _techniques
 
 def split_video_by_techniques(techniques):
-    for technique in aikido_techniques:
+    for technique in techniques:
         # ffmpeg -i input.mp4 -ss 00:05:10 -to 00:15:30 -c:v copy -c:a copy output2.mp4
         if technique.start == "00:00:00":
             subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-to", f"{technique.end}", "-c:v", "copy", "-c:a", "copy", f"{VIDEO_FOLDER}/{technique.mp4name()}"])
@@ -56,7 +55,7 @@ def split_video_by_techniques(techniques):
 
 
 def create_ffmpeg_commandline(techniques):
-    for technique in aikido_techniques:
+    for technique in techniques:
         # ffmpeg -i input.mp4 -ss 00:05:10 -to 00:15:30 -c:v copy -c:a copy output2.mp4
         if technique.start == "00:00:00":
             print(f"ffmpeg -i {INFILE} -to {technique.end} -c:v copy -c:a copy {technique.mp4name()}")
@@ -64,13 +63,16 @@ def create_ffmpeg_commandline(techniques):
             print(f"ffmpeg -i {INFILE} -ss {technique.start} -to {technique.end} -c:v copy -c:a copy {technique.mp4name()}")
 
 
-def create_deck(techniques, my_model):
-    my_deck = genanki.Deck(2059400110, "Aikido Bodo")
+def append_to_deck(my_deck, techniques, my_model):
     videos = []
     for technique in techniques: 
         my_note = genanki.Note(model=my_model, fields=[f"{technique.full_name()}", f"[sound:{technique.mp4name()}]"])
         my_deck.add_note(my_note)
         videos.append(f"{VIDEO_FOLDER}/{technique.mp4name()}")
+    return (my_deck, videos)
+
+ 
+def create_deck(my_deck, videos):
     pack = genanki.Package(my_deck)
     pack.media_files = videos
     pack.write_to_file("output.apkg")
@@ -94,16 +96,21 @@ def init_anki_model():
         ],
     )
 
-
-
-
 if __name__ == "__main__":
-    filepath_to_config = "2-kyu_techniken.yaml" 
-    yaml_data = read_yaml_file(filepath_to_config)
 
-    aikido_techniques = create_aikido_techniques(yaml_data)
-    split_video_by_techniques(aikido_techniques)
-    #create_ffmpeg_commandline(aikido_techniques)
-    create_deck(aikido_techniques, init_anki_model())
-
+    my_deck = genanki.Deck(2059400110, "Aikido Bodo")
+    my_model = init_anki_model() 
+    _videos = []
+    for kyu in range(5,0,-1):
+        print(kyu)
+        INFILE = f"data/Aikido-Schule_Bodo-Roedel_{kyu}-Kyu-Prüfungsprogramm.mp4"
+        filepath_to_config = f"{kyu}-kyu_techniken.yaml" 
+        yaml_data = read_yaml_file(filepath_to_config)
+        aikido_techniques = create_aikido_techniques(yaml_data)
+        split_video_by_techniques(aikido_techniques)
+        #create_ffmpeg_commandline(aikido_techniques)
+        my_deck, videos = append_to_deck(my_deck, aikido_techniques, my_model)
+        _videos.extend(videos)
+    # write deck to file
+    create_deck(my_deck, _videos) 
 
