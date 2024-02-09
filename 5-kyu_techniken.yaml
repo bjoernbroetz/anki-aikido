@@ -1,12 +1,13 @@
 suwari waza:
   - ryōte dori:
-    - {name: kokyū hō, start: "", end: ""}
+    - {name: kokyū hō, start: "00:01:41", end: "00:02:06"}
 tachi waza:
   - ai hanmi katate dori:
-    - {name: ikkyō, start: "", end: ""}
-    - {name: irimi nage, start: "", end: ""}
-    - {name: kote gaeshi, start: "", end: ""}
+    - {name: ikkyō, start: "00:00:00", end: "00:00:20"}
+    - {name: shihō nage, start: "00:00:20", end: "00:00:41"}
+    - {name: irimi nage, start: "00:00:41", end: "00:00:51"}
+    - {name: kote gaeshi, start: "00:00:51", end: "00:01:01"}
   - shōmen uchi: 
-    - {name: ikkyō, start: "", end: ""}
-    - {name: irimi nage, start: "", end: ""}
-    - {name: kote gaeshi, start: "", end: ""}
+    - {name: ikkyō, start: "00:01:01", end: "00:01:23"}
+    - {name: irimi nage, start: "00:01:23", end: "00:01:32"}
+    - {name: kote gaeshi, start: "00:01:32", end: "00:01:41"}
