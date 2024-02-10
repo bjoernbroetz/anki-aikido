@@ -5,12 +5,13 @@ import subprocess
 VIDEO_FOLDER = "videos"
 
 class AikidoTechnique:
-    def __init__(self, standing_position, attack, name, start, end):
+    def __init__(self, standing_position, attack, name, start, end, kyu):
         self.standing_position = standing_position
         self.attack = attack
         self.name = name
         self.start = start
         self.end = end
+        self.kyu = kyu
      
     def _clean_makron(self, s):
         return s.replace('ō','o').replace('ū','u')
@@ -25,7 +26,7 @@ class AikidoTechnique:
         return f"{self.standing_position} {self.attack} {self.name}"
     
     def anki_tags(self):
-        return self._clean_makron(f"{self.standing_position} {self.attack} {self.name}").replace('(', ' ').replace(')', ' ').split()
+        return self._clean_makron(f"{self.standing_position} {self.attack} {self.name} {self.kyu}").replace('(', ' ').replace(')', ' ').split()
 
 
 def read_yaml_file(file_path):
@@ -34,7 +35,7 @@ def read_yaml_file(file_path):
     return data
 
 
-def create_aikido_techniques(yaml_data):
+def create_aikido_techniques(yaml_data, kyu):
     _techniques = []
 
     for standing_position, actions in yaml_data.items():
@@ -46,7 +47,8 @@ def create_aikido_techniques(yaml_data):
                         attack,
                         technique['name'],
                         technique['start'],
-                        technique['end']
+                        technique['end'],
+                        kyu
                     )
                     _techniques.append(instance)
 
@@ -76,7 +78,7 @@ def create_ffmpeg_commandline(techniques):
 def append_to_deck(my_deck, techniques, my_model):
     videos = []
     for technique in techniques: 
-        my_note = genanki.Note(model=my_model, fields=[f"{technique.full_name()}", f"[sound:{technique.mp4name()}]"])
+        my_note = genanki.Note(model=my_model, fields=[f"{technique.full_name()}", f"[sound:{technique.mp4name()}]"], tags=technique.anki_tags() )
         my_deck.add_note(my_note)
         videos.append(f"{VIDEO_FOLDER}/{technique.mp4name()}")
     return (my_deck, videos)
@@ -113,11 +115,12 @@ if __name__ == "__main__":
     _videos = []
     for kyu in range(5,0,-1):
         print(kyu)
+        kyu_string = f"{kyu}.kyu"
         INFILE = f"data/Aikido-Schule_Bodo-Roedel_{kyu}-Kyu-Prüfungsprogramm.mp4"
         filepath_to_config = f"{kyu}-kyu_techniken.yaml" 
         yaml_data = read_yaml_file(filepath_to_config)
-        aikido_techniques = create_aikido_techniques(yaml_data)
-        split_video_by_techniques(aikido_techniques)
+        aikido_techniques = create_aikido_techniques(yaml_data, kyu_string)
+        ## Deactivated because the vids are fine: split_video_by_techniques(aikido_techniques)
         #create_ffmpeg_commandline(aikido_techniques)
         my_deck, videos = append_to_deck(my_deck, aikido_techniques, my_model)
         _videos.extend(videos)
