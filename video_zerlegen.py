@@ -11,15 +11,22 @@ class AikidoTechnique:
         self.name = name
         self.start = start
         self.end = end
+     
+    def _clean_makron(s):
+        return s.replace('ō','o').replace('ū','u')
 
     def __str__(self):
         return f"{self.standing_position} - {self.attack} - {self.name} ({self.start} to {self.end})"
     
     def mp4name(self):
-        return f"{self.standing_position}_{self.attack}_{self.name}.mp4".replace(' ','-').replace('ō','o').replace('ū','u').replace('(','+').replace(')','+')
+        return _clean_makron(f"{self.standing_position}_{self.attack}_{self.name}.mp4").replace(' ','-').replace('(', '+').replace(')', '+')
 
     def full_name(self):
         return f"{self.standing_position} {self.attack} {self.name}"
+    
+    def anki_tags(self):
+        return _clean_makron(f"{self.standing_position} {self.attack} {self.name}").replace('(', ' ').replace(')', ' ').split()
+
 
 def read_yaml_file(file_path):
     with open(file_path, 'r') as file:
@@ -48,13 +55,16 @@ def create_aikido_techniques(yaml_data):
 def split_video_by_techniques(techniques):
     for technique in techniques:
         # ffmpeg -i input.mp4 -ss 00:05:10 -to 00:15:30 -c:v copy -c:a copy output2.mp4
+
+        # ffmpeg -i Aikido-Schule_Bodo-Roedel_1-Kyu-Prüfungsprogramm.mp4 -ss 00:05:10 -to 00:05:30 -vf scale=640:-2 -c:v libx264 -profile:v baseline -level 3.0 -preset medium -crf 23 -movflags +faststart -an chat_buddy_noaudio_mobile_reduced.mp4
         if technique.start == "00:00:00":
-            subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-to", f"{technique.end}", "-c:v", "copy", "-c:a", "copy", f"{VIDEO_FOLDER}/{technique.mp4name()}"])
+            subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-to", f"{technique.end}", "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-preset", "medium", "-crf", "23", "-movflags", "+faststart", "-an", f"{VIDEO_FOLDER}/{technique.mp4name()}"])
         else:
-            subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-ss", f"{technique.start}", "-to", f"{technique.end}", "-c:v", "copy", "-c:a", "copy", f"{VIDEO_FOLDER}/{technique.mp4name()}"])
+            subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-ss", f"{technique.start}", "-to", f"{technique.end}", "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-preset", "medium", "-crf", "23", "-movflags", "+faststart", "-an", f"{VIDEO_FOLDER}/{technique.mp4name()}"])
 
 
 def create_ffmpeg_commandline(techniques):
+    """ Deprecated. """
     for technique in techniques:
         # ffmpeg -i input.mp4 -ss 00:05:10 -to 00:15:30 -c:v copy -c:a copy output2.mp4
         if technique.start == "00:00:00":
