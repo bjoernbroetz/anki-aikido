@@ -12,20 +12,20 @@ class AikidoTechnique:
         self.start = start
         self.end = end
      
-    def _clean_makron(s):
+    def _clean_makron(self, s):
         return s.replace('ō','o').replace('ū','u')
 
     def __str__(self):
         return f"{self.standing_position} - {self.attack} - {self.name} ({self.start} to {self.end})"
     
     def mp4name(self):
-        return _clean_makron(f"{self.standing_position}_{self.attack}_{self.name}.mp4").replace(' ','-').replace('(', '+').replace(')', '+')
+        return self._clean_makron(f"{self.standing_position}_{self.attack}_{self.name}.mp4").replace(' ','-').replace('(', '+').replace(')', '+')
 
     def full_name(self):
         return f"{self.standing_position} {self.attack} {self.name}"
     
     def anki_tags(self):
-        return _clean_makron(f"{self.standing_position} {self.attack} {self.name}").replace('(', ' ').replace(')', ' ').split()
+        return self._clean_makron(f"{self.standing_position} {self.attack} {self.name}").replace('(', ' ').replace(')', ' ').split()
 
 
 def read_yaml_file(file_path):
