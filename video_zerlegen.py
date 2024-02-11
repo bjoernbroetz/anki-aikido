@@ -40,7 +40,7 @@ def create_aikido_techniques(yaml_data, kyu):
 
     for standing_position, actions in yaml_data.items():
         for action in actions:
-           for attack, techniques in action.items():
+            for attack, techniques in action.items():
                 for technique in techniques:
                     instance = AikidoTechnique(
                         standing_position,
@@ -126,4 +126,3 @@ if __name__ == "__main__":
         _videos.extend(videos)
     # write deck to file
     create_deck(my_deck, _videos) 
-
