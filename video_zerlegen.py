@@ -26,7 +26,7 @@ class AikidoTechnique:
         return f"{self.standing_position} {self.attack} {self.name}"
     
     def anki_tags(self):
-        return self._clean_makron(f"{self.standing_position} {self.attack} {self.name} {self.kyu}").replace('(', ' ').replace(')', ' ').split()
+        return self._clean_makron(f"{self.standing_position};{self.attack};{self.name};{self.kyu}").replace(' ', '_').split(';')
 
 
 def read_yaml_file(file_path):
