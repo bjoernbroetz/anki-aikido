@@ -23,7 +23,7 @@ class AikidoTechnique:
         return self._clean_makron(f"{self.standing_position}_{self.attack}_{self.name}.mp4").replace(' ','-').replace('(', '+').replace(')', '+')
 
     def full_name(self):
-        return f"{self.standing_position} {self.attack} {self.name}"
+        return f"{self.standing_position}<br>{self.attack}<br>{self.name}"
     
     def anki_tags(self):
         return self._clean_makron(f"{self.standing_position};{self.attack};{self.name};{self.kyu}").replace(' ', '_').split(';')
