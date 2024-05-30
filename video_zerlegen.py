@@ -106,6 +106,7 @@ def init_anki_model():
                 "afmt": '{{FrontSide}}<hr id="answer">{{MyMedia}}',
             },
         ],
+        css='.card {font-family: arial;font-size: 40px;text-align: right;color: black;background-color: white;}',
     )
 
 if __name__ == "__main__":
