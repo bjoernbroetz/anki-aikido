@@ -3,7 +3,7 @@ import genanki
 import subprocess
 import argparse
 import random
-
+import logging
 VIDEO_FOLDER = "videos"
 
 class AikidoTechnique:
@@ -121,7 +121,24 @@ if __name__ == "__main__":
     parser.add_argument("--outfile", type=str, default='output', help="name of the output file. The file extention .apkg will be appended")
     parser.add_argument("--deck-number", type=int, default=random.randint(int(1e9), int(1e10)), help="number of deck. Default is a random number")
 
-    parser.parse_args()
+    args = parser.parse_args()
+
+    logger = logging.getLogger('video2anki')
+    logger.setLevel(logging.DEBUG)
+    fh = logging.FileHandler('logfile.log')
+    fh.setLevel(logging.DEBUG)
+    ch = logging.StreamHandler()
+    if args.verbosity:
+        ch.setLevel(logging.DEBUG)
+    else:
+        ch.setLevel(logging.ERROR)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh.setFormatter(formatter)
+    ch.setFormatter(formatter)
+    logger.addHandler(fh)
+    logger.addHandler(ch)
+
+
 
     description = """<div style="text-align:center;">
 Pr&uuml;fungsprogramm der Aikido F&ouml;deration Deutschland.
@@ -144,9 +161,26 @@ Bodo R&ouml;del  | Aikido Schule K&ouml;ln | <a href="https://www.aikido-schule.
         filepath_to_config = f"{kyu}-kyu_techniken.yaml" 
         yaml_data = read_yaml_file(filepath_to_config)
         aikido_techniques = create_aikido_techniques(yaml_data, kyu_string)
-        ## Deactivated because the vids are fine: split_video_by_techniques(aikido_techniques)
-        #create_ffmpeg_commandline(aikido_techniques)
+        if args.dry-run:
+            logger.info('Preparing dry run by setting option -s and unsetting option -w.')
+            args.skip-video-cuts = True
+            args.write-commands = False
+        else:
+            pass
+        if args.skip-video-cuts:
+            logger.info('Skipping the splitting of the videos.')
+        else:
+            logger.info('Starting to split the videos.')
+            split_video_by_techniques(aikido_techniques)
+        if args.write-commands:
+            logger.info('Creating a script with commands for the video cuts.')
+            create_ffmpeg_commandline(aikido_techniques)
+        else:
+            logger.debug('Skip creation of separate script for video cuts.')
         my_deck, videos = append_to_deck(my_deck, aikido_techniques, my_model)
         _videos.extend(videos)
-    # write deck to file
-    create_deck(my_deck, _videos) 
+    if args.dry-run:
+        logger.info('Dry run: Skipping to write deck to file.')
+    else:
+        logger.debug('Writing deck to file.')
+        create_deck(my_deck, _videos) 
