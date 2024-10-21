@@ -1,6 +1,8 @@
 import yaml
 import genanki
 import subprocess
+import argparse
+import random
 
 VIDEO_FOLDER = "videos"
 
@@ -110,6 +112,17 @@ def init_anki_model():
     )
 
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
+    parser.add_argument("-s", "--skip-video-cuts", help="skip splitting of videos", action="store_true")
+    parser.add_argument("-w", "--write-commands", help="write commands to cut the videos to the file XXX", action="store_true")
+    parser.add_argument("-d", "--dry-run", help="execute script but don't create or change anything", action="store_true")
+    parser.add_argument("--outfile", type=str, default='output', help="name of the output file. The file extention .apkg will be appended")
+    parser.add_argument("--deck-number", type=int, default=random.randint(int(1e9), int(1e10)), help="number of deck. Default is a random number")
+
+    parser.parse_args()
+
     description = """<div style="text-align:center;">
 Pr&uuml;fungsprogramm der Aikido F&ouml;deration Deutschland.
 <b>Videos:</b>
