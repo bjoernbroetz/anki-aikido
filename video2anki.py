@@ -86,10 +86,11 @@ def append_to_deck(my_deck, techniques, my_model):
     return (my_deck, videos)
 
  
-def create_deck(my_deck, videos):
+def create_deck(my_deck, videos, filename):
+    filename = check_filename(filename)
     pack = genanki.Package(my_deck)
     pack.media_files = videos
-    pack.write_to_file("output.apkg")
+    pack.write_to_file(f"{filename}.apkg")
 
 
 def init_anki_model():
@@ -111,15 +112,25 @@ def init_anki_model():
         css='.card {font-family: arial;font-size: 40px;text-align: right;color: black;background-color: white;}',
     )
 
+def check_filename(filename):
+    """Allow only filenames with alphanumeric values 
+    as well as '-' and '_' and of maximum length of 255 characters.
+    """
+    if filename.replace('-','').replace('_','').isalnum() and len(filename) < 256 :
+        return filename
+    else:
+        raise ValueError('Bad filename.')
+        
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
-    parser.add_argument("-s", "--skip-video-cuts", help="skip splitting of videos", action="store_true")
+    parser.add_argument("-s", "--skip-video-cut", help="skip splitting of videos", action="store_true")
     parser.add_argument("-w", "--write-commands", help="write commands to cut the videos to the file XXX", action="store_true")
     parser.add_argument("-d", "--dry-run", help="execute script but don't create or change anything", action="store_true")
     parser.add_argument("--outfile", type=str, default='output', help="name of the output file. The file extention .apkg will be appended")
-    parser.add_argument("--deck-number", type=int, default=random.randint(int(1e9), int(1e10)), help="number of deck. Default is a random number")
+    parser.add_argument("--deck-id", type=int, default=random.randint(int(1e9), int(1e10)), help="id of deck. Default is a random number")
 
     args = parser.parse_args()
 
@@ -163,11 +174,11 @@ Bodo R&ouml;del  | Aikido Schule K&ouml;ln | <a href="https://www.aikido-schule.
         aikido_techniques = create_aikido_techniques(yaml_data, kyu_string)
         if args.dry-run:
             logger.info('Preparing dry run by setting option -s and unsetting option -w.')
-            args.skip-video-cuts = True
-            args.write-commands = False
+            setattr(args, 'skip-video-cut', True)
+            setattr(args, 'write-commands', False)
         else:
             pass
-        if args.skip-video-cuts:
+        if args.skip-video-cut:
             logger.info('Skipping the splitting of the videos.')
         else:
             logger.info('Starting to split the videos.')
@@ -183,4 +194,4 @@ Bodo R&ouml;del  | Aikido Schule K&ouml;ln | <a href="https://www.aikido-schule.
         logger.info('Dry run: Skipping to write deck to file.')
     else:
         logger.debug('Writing deck to file.')
-        create_deck(my_deck, _videos) 
+        create_deck(my_deck, _videos, args.outfile) 
