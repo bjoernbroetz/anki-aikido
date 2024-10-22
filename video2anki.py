@@ -120,6 +120,13 @@ def check_filename(filename):
         return filename
     else:
         raise ValueError('Bad filename.')
+
+def check_id(number):
+    """Allow only numeric values of maximum 1e10."""
+    if number.isnumeric() and int(number) < 1e10 :
+        return number
+    else:
+        raise ValueError('Bad deck-id.')
         
 
 if __name__ == "__main__":
@@ -162,7 +169,7 @@ Bodo R&ouml;del  | Aikido Schule K&ouml;ln | <a href="https://www.aikido-schule.
 <a href="https://www.aikido-foederation.de">aikido-foederation.de</a>
 </div>
 """
-    my_deck = genanki.Deck(2059400110, "Aikido", description)
+    my_deck = genanki.Deck(check_id(args.deck-id), "Aikido", description)
     my_model = init_anki_model() 
     _videos = []
     for kyu in range(5,0,-1):
