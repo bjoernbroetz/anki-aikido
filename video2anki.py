@@ -4,6 +4,7 @@ import subprocess
 import argparse
 import random
 import logging
+
 VIDEO_FOLDER = "videos"
 
 class AikidoTechnique:
@@ -58,9 +59,6 @@ def create_aikido_techniques(yaml_data, kyu):
 
 def split_video_by_techniques(techniques):
     for technique in techniques:
-        # ffmpeg -i input.mp4 -ss 00:05:10 -to 00:15:30 -c:v copy -c:a copy output2.mp4
-
-        # ffmpeg -i Aikido-Schule_Bodo-Roedel_1-Kyu-Prüfungsprogramm.mp4 -ss 00:05:10 -to 00:05:30 -vf scale=640:-2 -c:v libx264 -profile:v baseline -level 3.0 -preset medium -crf 23 -movflags +faststart -an chat_buddy_noaudio_mobile_reduced.mp4
         if technique.start == "00:00:00":
             subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-to", f"{technique.end}", "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-preset", "medium", "-crf", "23", "-movflags", "+faststart", "-an", f"{VIDEO_FOLDER}/{technique.mp4name()}"])
         else:
@@ -70,7 +68,6 @@ def split_video_by_techniques(techniques):
 def create_ffmpeg_commandline(techniques):
     """ Deprecated. """
     for technique in techniques:
-        # ffmpeg -i input.mp4 -ss 00:05:10 -to 00:15:30 -c:v copy -c:a copy output2.mp4
         if technique.start == "00:00:00":
             print(f"ffmpeg -i {INFILE} -to {technique.end} -c:v copy -c:a copy {technique.mp4name()}")
         else:
@@ -99,7 +96,6 @@ def init_anki_model():
         "Simple Model",
         fields=[
             {"name": "Question"},
-            #{"name": "Answer"},
             {"name": "MyMedia"},
         ],
         templates=[
@@ -173,7 +169,7 @@ Bodo R&ouml;del  | Aikido Schule K&ouml;ln | <a href="https://www.aikido-schule.
     my_model = init_anki_model() 
     _videos = []
     for kyu in range(5,0,-1):
-        print(kyu)
+        logger.info(f"Processing {kyu} kyu")
         kyu_string = f"{kyu}.kyu"
         INFILE = f"data/Aikido-Schule_Bodo-Roedel_{kyu}-Kyu-Prüfungsprogramm.mp4"
         filepath_to_config = f"{kyu}-kyu_techniken.yaml" 
