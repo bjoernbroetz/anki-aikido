@@ -1,0 +1,7 @@
+name: anki
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - pyyaml
+  - genanki
