@@ -154,16 +154,10 @@ if __name__ == "__main__":
 
 
 
-    description = """<div style="text-align:center;">
-Pr&uuml;fungsprogramm der Aikido F&ouml;deration Deutschland.
-<b>Videos:</b>
-Bodo R&ouml;del  | Aikido Schule K&ouml;ln | <a href="https://www.aikido-schule.de">aikido-schule.de</a>
-<b>Code/Issues:</b>
-<a href="https://github.com/bjoernbroetz/anki-aikido">github.com/bjoernbroetz/anki-aikido</a>
-<b>AIKIDO</b> F&Ouml;DERATION DEUTSCHLAND e.V.
-<a href="https://www.aikido-foederation.de">aikido-foederation.de</a>
-</div>
-"""
+    with open('description.html', 'r') as html:
+        logger.debug('Read description.')
+        description = html.read()
+
     my_deck = genanki.Deck(check_id(args.deckid), "Aikido techniques with videos.", description)
     my_model = init_anki_model() 
     _videos = []
