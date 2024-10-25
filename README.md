@@ -1,8 +1,8 @@
 # Videos to anki deck
 
-...
+Creates an anki deck based on some videos with aikido techniques.
 
-## Prerequests
+## Prerequisite
 
 - ffmpeg
 - python
