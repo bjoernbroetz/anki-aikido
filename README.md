@@ -2,6 +2,13 @@
 
 ...
 
+## Prerequests
+
+- ffmpeg
+- python
+  - pyyaml
+  - genanki
+
 ## Usage
 
 The skript expects one video per kyu in the `data` folder. 
@@ -12,4 +19,4 @@ Contributions are very welcome. When you make adjustment for different input vid
 
 ## License
 
-MIT
+MIT License (see LICENSE file)
