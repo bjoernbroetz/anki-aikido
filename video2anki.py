@@ -119,21 +119,21 @@ def check_filename(filename):
 
 def check_id(number):
     """Allow only numeric values of maximum 1e10."""
-    if number.isnumeric() and int(number) < 1e10 :
+    if type(number) is int and number < 1e10 :
         return number
     else:
-        raise ValueError('Bad deck-id.')
+        raise ValueError('Bad deckid.')
         
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
-    parser.add_argument("-s", "--skip-video-cut", help="skip splitting of videos", action="store_true")
-    parser.add_argument("-w", "--write-commands", help="write commands to cut the videos to the file XXX", action="store_true")
-    parser.add_argument("-d", "--dry-run", help="execute script but don't create or change anything", action="store_true")
+    parser.add_argument("-s", "--skipvideocut", help="skip splitting of videos", action="store_true")
+    parser.add_argument("-w", "--writecommands", help="write commands to cut the videos to the file XXX", action="store_true")
+    parser.add_argument("-d", "--dryrun", help="execute script but don't create or change anything", action="store_true")
     parser.add_argument("--outfile", type=str, default='output', help="name of the output file. The file extention .apkg will be appended")
-    parser.add_argument("--deck-id", type=int, default=random.randint(int(1e9), int(1e10)), help="id of deck. Default is a random number")
+    parser.add_argument("--deckid", type=int, default=random.randint(int(1e9), int(1e10)), help="id of deck. Default is a random number")
 
     args = parser.parse_args()
 
@@ -142,7 +142,7 @@ if __name__ == "__main__":
     fh = logging.FileHandler('logfile.log')
     fh.setLevel(logging.DEBUG)
     ch = logging.StreamHandler()
-    if args.verbosity:
+    if args.verbose:
         ch.setLevel(logging.DEBUG)
     else:
         ch.setLevel(logging.ERROR)
@@ -165,7 +165,7 @@ Bodo R&ouml;del  | Aikido Schule K&ouml;ln | <a href="https://www.aikido-schule.
 <a href="https://www.aikido-foederation.de">aikido-foederation.de</a>
 </div>
 """
-    my_deck = genanki.Deck(check_id(args.deck-id), "Aikido", description)
+    my_deck = genanki.Deck(check_id(args.deckid), "Aikido", description)
     my_model = init_anki_model() 
     _videos = []
     for kyu in range(5,0,-1):
@@ -175,25 +175,25 @@ Bodo R&ouml;del  | Aikido Schule K&ouml;ln | <a href="https://www.aikido-schule.
         filepath_to_config = f"{kyu}-kyu_techniken.yaml" 
         yaml_data = read_yaml_file(filepath_to_config)
         aikido_techniques = create_aikido_techniques(yaml_data, kyu_string)
-        if args.dry-run:
+        if args.dryrun:
             logger.info('Preparing dry run by setting option -s and unsetting option -w.')
-            setattr(args, 'skip-video-cut', True)
-            setattr(args, 'write-commands', False)
+            setattr(args, 'skipvideocut', True)
+            setattr(args, 'writecommands', False)
         else:
             pass
-        if args.skip-video-cut:
+        if args.skipvideocut:
             logger.info('Skipping the splitting of the videos.')
         else:
             logger.info('Starting to split the videos.')
             split_video_by_techniques(aikido_techniques)
-        if args.write-commands:
+        if args.writecommands:
             logger.info('Creating a script with commands for the video cuts.')
             create_ffmpeg_commandline(aikido_techniques)
         else:
             logger.debug('Skip creation of separate script for video cuts.')
         my_deck, videos = append_to_deck(my_deck, aikido_techniques, my_model)
         _videos.extend(videos)
-    if args.dry-run:
+    if args.dryrun:
         logger.info('Dry run: Skipping to write deck to file.')
     else:
         logger.debug('Writing deck to file.')
