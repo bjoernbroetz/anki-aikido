@@ -57,22 +57,29 @@ def create_aikido_techniques(yaml_data, kyu):
 
     return _techniques
 
-def split_video_by_techniques(techniques):
+def split_video_by_techniques(techniques, dry_run=False):
     for technique in techniques:
+        cmd = ["ffmpeg", "-i", f"{INFILE}", "-to", "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-preset", "medium", "-crf", "23", "-movflags", "+faststart", "-an"]
         if technique.start == "00:00:00":
-            subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-to", f"{technique.end}", "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-preset", "medium", "-crf", "23", "-movflags", "+faststart", "-an", f"{VIDEO_FOLDER}/{technique.mp4name()}"])
+            cmd.insert(4, f"{technique.end}")
+            cmd.append(f"{VIDEO_FOLDER}/{technique.mp4name()}")
+            # cmd = ["ffmpeg", "-i", f"{INFILE}", "-to", f"{technique.end}", "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-preset", "medium", "-crf", "23", "-movflags", "+faststart", "-an", f"{VIDEO_FOLDER}/{technique.mp4name()}"]
+            if dry_run:
+                logger.info(f"Dry run: Not executing command: {" ".join(cmd)}")
+            else:
+                logger.debug(f"Executing command: {" ".join(cmd)}")
+                subprocess.run(cmd)
         else:
-            subprocess.run(["ffmpeg", "-i", f"{INFILE}", "-ss", f"{technique.start}", "-to", f"{technique.end}", "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-preset", "medium", "-crf", "23", "-movflags", "+faststart", "-an", f"{VIDEO_FOLDER}/{technique.mp4name()}"])
-
-
-def create_ffmpeg_commandline(techniques):
-    """ Deprecated. """
-    for technique in techniques:
-        if technique.start == "00:00:00":
-            print(f"ffmpeg -i {INFILE} -to {technique.end} -c:v copy -c:a copy {technique.mp4name()}")
-        else:
-            print(f"ffmpeg -i {INFILE} -ss {technique.start} -to {technique.end} -c:v copy -c:a copy {technique.mp4name()}")
-
+            cmd.insert(4, f"{technique.end}")
+            cmd.insert(3, f"{technique.start}")
+            cmd.insert(3, "-ss")
+            cmd.append(f"{VIDEO_FOLDER}/{technique.mp4name()}")
+            # cmd = ["ffmpeg", "-i", f"{INFILE}", "-ss", f"{technique.start}", "-to", f"{technique.end}", "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-preset", "medium", "-crf", "23", "-movflags", "+faststart", "-an", f"{VIDEO_FOLDER}/{technique.mp4name()}"]
+            if dry_run:
+                logger.info(f"Dry run: Not executing command: {" ".join(cmd)}")
+            else:
+                logger.debug(f"Executing command: {" ".join(cmd)}")
+                subprocess.run(cmd)
 
 def append_to_deck(my_deck, techniques, my_model):
     videos = []
@@ -130,7 +137,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
     parser.add_argument("-s", "--skipvideocut", help="skip splitting of videos", action="store_true")
-    parser.add_argument("-w", "--writecommands", help="write commands to cut the videos to the file XXX", action="store_true")
     parser.add_argument("-d", "--dryrun", help="execute script but don't create or change anything", action="store_true")
     parser.add_argument("--outfile", type=str, default='output', help="name of the output file. The file extention .apkg will be appended")
     parser.add_argument("--deckid", type=int, default=random.randint(int(1e9), int(1e10)), help="id of deck. Default is a random number")
@@ -169,21 +175,16 @@ if __name__ == "__main__":
         yaml_data = read_yaml_file(filepath_to_config)
         aikido_techniques = create_aikido_techniques(yaml_data, kyu_string)
         if args.dryrun:
-            logger.info('Preparing dry run by setting option -s and unsetting option -w.')
+            logger.info('Preparing dry run by setting option -s.')
             setattr(args, 'skipvideocut', True)
-            setattr(args, 'writecommands', False)
         else:
             pass
         if args.skipvideocut:
             logger.info('Skipping the splitting of the videos.')
+            split_video_by_techniques(aikido_techniques, dry_run=True)
         else:
             logger.info('Starting to split the videos.')
             split_video_by_techniques(aikido_techniques)
-        if args.writecommands:
-            logger.info('Creating a script with commands for the video cuts.')
-            create_ffmpeg_commandline(aikido_techniques)
-        else:
-            logger.debug('Skip creation of separate script for video cuts.')
         my_deck, videos = append_to_deck(my_deck, aikido_techniques, my_model)
         _videos.extend(videos)
     if args.dryrun:
