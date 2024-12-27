@@ -24,10 +24,10 @@ class AikidoTechnique:
     def __str__(self):
         return f"{self.standing_position} - {self.attack} - {self.name} ({self.start} to {self.end})"
 
-    def mp4name(self):
+    def webmname(self):
         return (
             self._clean_makron(
-                f"{self.standing_position}_{self.attack}_{self.name}.mp4"
+                f"{self.standing_position}_{self.attack}_{self.name}.webm"
             )
             .replace(" ", "-")
             .replace("(", "+")
@@ -75,6 +75,7 @@ def create_aikido_techniques(yaml_data, kyu):
 
 def split_video_by_techniques(techniques, dry_run=False):
     for technique in techniques:
+        # ffmpeg -i input.mp4 -vf "scale=640:-2" -c:v libvpx-vp9 -crf 30 -b:v 0 -an output.webm
         cmd = [
             "ffmpeg",
             "-i",
@@ -83,23 +84,39 @@ def split_video_by_techniques(techniques, dry_run=False):
             "-vf",
             "scale=640:-2",
             "-c:v",
-            "libx264",
-            "-profile:v",
-            "baseline",
-            "-level",
-            "3.0",
-            "-preset",
-            "medium",
+            "libvpx-vp9",
             "-crf",
-            "23",
-            "-movflags",
-            "+faststart",
+            "30",
+            "-b:v",
+            "0",
             "-an",
         ]
+        # cmd = [
+        #    "ffmpeg",
+        #    "-i",
+        #    f"{INFILE}",
+        #    "-to",
+        #    "-vf",
+        #    "scale=640:-2",
+        #    "-c:v",
+        #    "libx264",
+        #    "-profile:v",
+        #    "baseline",
+        #    "-level",
+        #    "3.0",
+        #    "-preset",
+        #    "medium",
+        #    "-crf",
+        #    "23",
+        #    "-movflags",
+        #    "+faststart",
+        #    "-an",
+        #]
+
         if technique.start == "00:00:00":
             cmd.insert(4, f"{technique.end}")
-            cmd.append(f"{VIDEO_FOLDER}/{technique.mp4name()}")
-            # cmd = ["ffmpeg", "-i", f"{INFILE}", "-to", f"{technique.end}", "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-preset", "medium", "-crf", "23", "-movflags", "+faststart", "-an", f"{VIDEO_FOLDER}/{technique.mp4name()}"]
+            cmd.append(f"{VIDEO_FOLDER}/{technique.webmname()}")
+            # cmd = ["ffmpeg", "-i", f"{INFILE}", "-to", f"{technique.end}", "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-preset", "medium", "-crf", "23", "-movflags", "+faststart", "-an", f"{VIDEO_FOLDER}/{technique.webmname()}"]
             if dry_run:
                 logger.info(f"Dry run: Not executing command: {" ".join(cmd)}")
             else:
@@ -109,8 +126,8 @@ def split_video_by_techniques(techniques, dry_run=False):
             cmd.insert(4, f"{technique.end}")
             cmd.insert(3, f"{technique.start}")
             cmd.insert(3, "-ss")
-            cmd.append(f"{VIDEO_FOLDER}/{technique.mp4name()}")
-            # cmd = ["ffmpeg", "-i", f"{INFILE}", "-ss", f"{technique.start}", "-to", f"{technique.end}", "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-preset", "medium", "-crf", "23", "-movflags", "+faststart", "-an", f"{VIDEO_FOLDER}/{technique.mp4name()}"]
+            cmd.append(f"{VIDEO_FOLDER}/{technique.webmname()}")
+            # cmd = ["ffmpeg", "-i", f"{INFILE}", "-ss", f"{technique.start}", "-to", f"{technique.end}", "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-preset", "medium", "-crf", "23", "-movflags", "+faststart", "-an", f"{VIDEO_FOLDER}/{technique.webmname()}"]
             if dry_run:
                 logger.info(f"Dry run: Not executing command: {" ".join(cmd)}")
             else:
@@ -123,11 +140,11 @@ def append_to_deck(my_deck, techniques, my_model):
     for technique in techniques:
         my_note = genanki.Note(
             model=my_model,
-            fields=[f"{technique.full_name()}", f"[sound:{technique.mp4name()}]"],
+            fields=[f"{technique.full_name()}", f"[sound:{technique.webmname()}]"],
             tags=technique.anki_tags(),
         )
         my_deck.add_note(my_note)
-        videos.append(f"{VIDEO_FOLDER}/{technique.mp4name()}")
+        videos.append(f"{VIDEO_FOLDER}/{technique.webmname()}")
     return (my_deck, videos)
 
 
