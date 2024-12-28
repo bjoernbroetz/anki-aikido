@@ -136,11 +136,19 @@ def split_video_by_techniques(techniques, dry_run=False):
 
 
 def append_to_deck(my_deck, techniques, my_model):
+    template_answer = """
+<video controls autoplay muted>
+    <source src="{video_to_be_inserted}" type="video/webm">
+</video>
+"""
+
     videos = []
     for technique in techniques:
         my_note = genanki.Note(
             model=my_model,
-            fields=[f"{technique.full_name()}", f"[sound:{technique.webmname()}]"],
+            fields=[f"{technique.full_name()}",
+                    template_answer.format(video_to_be_inserted=technique.webmname()),
+                    f"[sound:{technique.webmname()}]"],
             tags=technique.anki_tags(),
         )
         my_deck.add_note(my_note)
@@ -162,6 +170,7 @@ def init_anki_model():
         fields=[
             {"name": "Question"},
             {"name": "MyMedia"},
+            {"name": "KeepMedia"},
         ],
         templates=[
             {
