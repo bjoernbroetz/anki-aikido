@@ -1,0 +1,6 @@
+tachi dori:
+  - shōmen uchi:
+      - {name: kote gaeshi, start: "00:00:00", end: "00:00:09"}
+      - {name: shihō nage omote, start: "00:00:09", end: "00:00:22"}
+      - {name: sokumen irimi nage, start: "00:00:22", end: "00:00:35"}
+      - {name: kokyū nage, start: "00:00:35", end: "00:01:05"}
