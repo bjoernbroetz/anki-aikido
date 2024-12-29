@@ -1,0 +1,26 @@
+tantō dori:
+  - chūdan tsuki:
+      - {name: ikkyō, start: "00:00:00", end: "00:00:28"}
+      - {name: uchi kaiten sankyō, start: "00:00:28", end: "00:00:45"}
+      - {name: hiji kime osae, start: "00:00:45", end: "00:01:01"}
+      - {name: kote gaeshi, start: "00:01:01", end: "00:01:16"}
+      - {name: irimi nage, start: "00:01:16", end: "00:01:28"}
+  - shōmen uchi hon-te:
+      - {name: gokyō ura, start: "00:01:28", end: "00:01:42"}
+      - {name: hiji kime osae, start: "00:01:42", end: "00:01:56"}
+      - {name: kote gaeshi, start: "00:01:56", end: "00:02:09"}
+      - {name: irimi nage, start: "00:02:09", end: "00:02:22"}
+  - shōmen uchi gyaku-te:
+      - {name: gokyō ura, start: "00:02:22", end: "00:02:36"}
+      - {name: kote gaeshi, start: "00:02:36", end: "00:02:49"}
+      - {name: irimi nage, start: "00:02:49", end: "00:03:00"}
+  - yokomen uchi hon-te:
+      - {name: gokyō ura, start: "00:03:00", end: "00:03:16"}
+      - {name: kote gaeshi, start: "00:03:16", end: "00:03:31"}
+      - {name: shihō nage, start: "00:03:31", end: "00:03:52"}
+      - {name: irimi nage, start: "00:03:52", end: "00:04:04"}
+  - yokomen uchi gyaku-te:
+      - {name: gokyō ura, start: "00:04:06", end: "00:04:19"}
+      - {name: kote gaeshi, start: "00:04:19", end: "00:04:32"}
+      - {name: shihō nage omote, start: "00:04:32", end: "00:04:43"}
+      - {name: irimi nage, start: "00:04:43", end: "00:04:57"}
