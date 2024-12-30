@@ -73,13 +73,14 @@ def create_aikido_techniques(yaml_data, kyu):
     return _techniques
 
 
-def split_video_by_techniques(techniques, dry_run=False):
+def split_video_by_techniques(techniques, path_to_video, dry_run=False):
     for technique in techniques:
         # ffmpeg -i input.mp4 -vf "scale=640:-2" -c:v libvpx-vp9 -crf 30 -b:v 0 -an output.webm
+        # TODO: Input sanitation of path_to_video. That string is executed, so it must be checked before. Check if sting is an existing file.
         cmd = [
             "ffmpeg",
             "-i",
-            f"{INFILE}",
+            path_to_video,
             "-to",
             "-vf",
             "scale=640:-2",
@@ -91,27 +92,6 @@ def split_video_by_techniques(techniques, dry_run=False):
             "0",
             "-an",
         ]
-        # cmd = [
-        #    "ffmpeg",
-        #    "-i",
-        #    f"{INFILE}",
-        #    "-to",
-        #    "-vf",
-        #    "scale=640:-2",
-        #    "-c:v",
-        #    "libx264",
-        #    "-profile:v",
-        #    "baseline",
-        #    "-level",
-        #    "3.0",
-        #    "-preset",
-        #    "medium",
-        #    "-crf",
-        #    "23",
-        #    "-movflags",
-        #    "+faststart",
-        #    "-an",
-        #]
 
         if technique.start == "00:00:00":
             cmd.insert(4, f"{technique.end}")
@@ -146,9 +126,11 @@ def append_to_deck(my_deck, techniques, my_model):
     for technique in techniques:
         my_note = genanki.Note(
             model=my_model,
-            fields=[f"{technique.full_name()}",
-                    template_answer.format(video_to_be_inserted=technique.webmname()),
-                    f"[sound:{technique.webmname()}]"],
+            fields=[
+                f"{technique.full_name()}",
+                template_answer.format(video_to_be_inserted=technique.webmname()),
+                f"[sound:{technique.webmname()}]",
+            ],
             tags=technique.anki_tags(),
         )
         my_deck.add_note(my_note)
@@ -247,6 +229,10 @@ if __name__ == "__main__":
     logger.addHandler(fh)
     logger.addHandler(ch)
 
+    with open("config.yaml", "r") as f:
+        logger.debug("Loading basic configuration.")
+        cfg = yaml.safe_load(f)
+
     with open("description.html", "r") as html:
         logger.debug("Read description.")
         description = html.read()
@@ -256,13 +242,12 @@ if __name__ == "__main__":
     )
     my_model = init_anki_model()
     _videos = []
-    for kyu in range(5, 0, -1):
-        logger.info(f"Processing {kyu} kyu")
-        kyu_string = f"{kyu}.kyu"
-        INFILE = f"data/Aikido-Schule_Bodo-Roedel_{kyu}-Kyu-Prüfungsprogramm.mp4"
-        filepath_to_config = f"{kyu}-kyu_techniken.yaml"
-        yaml_data = read_yaml_file(filepath_to_config)
-        aikido_techniques = create_aikido_techniques(yaml_data, kyu_string)
+    for config_item, config_parameter in cfg.items():
+        logger.info(f"Processing {config_item}")
+        aikido_techniques = create_aikido_techniques(
+            read_yaml_file(config_parameter["path_to_yaml"]),
+            config_parameter["keyword"],
+        )
         if args.dryrun:
             logger.info("Preparing dry run by setting option -s.")
             setattr(args, "skipvideocut", True)
@@ -270,77 +255,16 @@ if __name__ == "__main__":
             pass
         if args.skipvideocut:
             logger.info("Skipping the splitting of the videos.")
-            split_video_by_techniques(aikido_techniques, dry_run=True)
+            split_video_by_techniques(
+                aikido_techniques, config_parameter["path_to_video"], dry_run=True
+            )
         else:
             logger.info("Starting to split the videos.")
-            split_video_by_techniques(aikido_techniques)
+            split_video_by_techniques(
+                aikido_techniques, config_parameter["path_to_video"]
+            )
         my_deck, videos = append_to_deck(my_deck, aikido_techniques, my_model)
         _videos.extend(videos)
-    # armed techniques
-    ## Tanto dori
-    INFILE = "data/Aikido-Schule_Bodo-Roedel_Dan-Prüfungsprogramm_tanto-dori.mp4"
-    aikido_techniques = create_aikido_techniques(read_yaml_file("tanto-dori.yaml"), "buki_waza")
-    if args.dryrun:
-        logger.info("Preparing dry run by setting option -s.")
-        setattr(args, "skipvideocut", True)
-    else:
-        pass
-    if args.skipvideocut:
-        logger.info("Skipping the splitting of the videos.")
-        split_video_by_techniques(aikido_techniques, dry_run=True)
-    else:
-        logger.info("Starting to split the videos.")
-        split_video_by_techniques(aikido_techniques)
-    my_deck, videos = append_to_deck(my_deck, aikido_techniques, my_model)
-    _videos.extend(videos)
-    ## Jo dori
-    INFILE = "data/Aikido-Schule_Bodo-Roedel_Dan-Prüfungsprogramm_jo-dori.mp4"
-    aikido_techniques = create_aikido_techniques(read_yaml_file("jo-dori.yaml"), "buki_waza")
-    if args.dryrun:
-        logger.info("Preparing dry run by setting option -s.")
-        setattr(args, "skipvideocut", True)
-    else:
-        pass
-    if args.skipvideocut:
-        logger.info("Skipping the splitting of the videos.")
-        split_video_by_techniques(aikido_techniques, dry_run=True)
-    else:
-        logger.info("Starting to split the videos.")
-        split_video_by_techniques(aikido_techniques)
-    my_deck, videos = append_to_deck(my_deck, aikido_techniques, my_model)
-    _videos.extend(videos)
-    ## Jo nage 
-    INFILE = "data/Aikido-Schule_Bodo-Roedel_Dan-Prüfungsprogramm_jo-nage.mp4"
-    aikido_techniques = create_aikido_techniques(read_yaml_file("jo-nage.yaml"), "buki_waza")
-    if args.dryrun:
-        logger.info("Preparing dry run by setting option -s.")
-        setattr(args, "skipvideocut", True)
-    else:
-        pass
-    if args.skipvideocut:
-        logger.info("Skipping the splitting of the videos.")
-        split_video_by_techniques(aikido_techniques, dry_run=True)
-    else:
-        logger.info("Starting to split the videos.")
-        split_video_by_techniques(aikido_techniques)
-    my_deck, videos = append_to_deck(my_deck, aikido_techniques, my_model)
-    _videos.extend(videos)
-    ## Tachi dori 
-    INFILE = "data/Aikido-Schule_Bodo-Roedel_Dan-Prüfungsprogramm_tachi-dori.mp4"
-    aikido_techniques = create_aikido_techniques(read_yaml_file("tachi-dori.yaml"), "buki_waza")
-    if args.dryrun:
-        logger.info("Preparing dry run by setting option -s.")
-        setattr(args, "skipvideocut", True)
-    else:
-        pass
-    if args.skipvideocut:
-        logger.info("Skipping the splitting of the videos.")
-        split_video_by_techniques(aikido_techniques, dry_run=True)
-    else:
-        logger.info("Starting to split the videos.")
-        split_video_by_techniques(aikido_techniques)
-    my_deck, videos = append_to_deck(my_deck, aikido_techniques, my_model)
-    _videos.extend(videos)
     if args.dryrun:
         logger.info("Dry run: Skipping to write deck to file.")
     else:
