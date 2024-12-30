@@ -1,0 +1,36 @@
+1.kyu:
+  path_to_video: "data/Aikido-Schule_Bodo-Roedel_1-Kyu-Prüfungsprogramm.mp4"
+  path_to_yaml: "1-kyu_techniken.yaml"  
+  keyword: "1.kyu"
+2.kyu: 
+  path_to_video: "data/Aikido-Schule_Bodo-Roedel_2-Kyu-Prüfungsprogramm.mp4"
+  path_to_yaml: "2-kyu_techniken.yaml"  
+  keyword: "2.kyu"
+3.kyu: 
+  path_to_video: "data/Aikido-Schule_Bodo-Roedel_3-Kyu-Prüfungsprogramm.mp4"
+  path_to_yaml: "3-kyu_techniken.yaml"  
+  keyword: "3.kyu"
+4.kyu: 
+  path_to_video: "data/Aikido-Schule_Bodo-Roedel_4-Kyu-Prüfungsprogramm.mp4"
+  path_to_yaml: "4-kyu_techniken.yaml"  
+  keyword: "4.kyu"
+5.kyu: 
+  path_to_video: "data/Aikido-Schule_Bodo-Roedel_5-Kyu-Prüfungsprogramm.mp4"
+  path_to_yaml: "5-kyu_techniken.yaml"  
+  keyword: "5.kyu"
+jo-dori: 
+  path_to_video: "data/Aikido-Schule_Bodo-Roedel_Dan-Prüfungsprogramm_jo-dori.mp4"
+  path_to_yaml: "jo-dori.yaml"  
+  keyword: "buki waza"
+jo-nage: 
+  path_to_video: "data/Aikido-Schule_Bodo-Roedel_Dan-Prüfungsprogramm_jo-nage.mp4"
+  path_to_yaml: "jo-nage.yaml"  
+  keyword: "buki waza"
+tachi-dori: 
+  path_to_video: "data/Aikido-Schule_Bodo-Roedel_Dan-Prüfungsprogramm_tachi-dori.mp4"
+  path_to_yaml: "tachi-dori.yaml"
+  keyword: "buki waza"
+tanto-dori: 
+  path_to_video: "data/Aikido-Schule_Bodo-Roedel_Dan-Prüfungsprogramm_tanto-dori.mp4"
+  path_to_yaml: "tanto-dori.yaml"
+  keyword: "buki waza"
