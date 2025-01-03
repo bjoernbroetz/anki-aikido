@@ -11,7 +11,20 @@ Creates an anki deck based on some videos with aikido techniques.
 
 ## Usage
 
-The skript expects one video per kyu in the `data` folder. 
+The configuration file `config.yaml` defines the paths to the input files and connects them to the individual configuration files. There is one individual configuration file per input video.    
+
+```
+usage: video2anki.py [-h] [-v] [-s] [-d] [--outfile OUTFILE] [--deckid DECKID]
+
+options:
+  -h, --help          show this help message and exit
+  -v, --verbose       increase output verbosity
+  -s, --skipvideocut  skip splitting of videos
+  -d, --dryrun        execute script but don't create or change anything
+  --outfile OUTFILE   name of the output file. The file extention .apkg will
+                      be appended
+  --deckid DECKID     id of deck. Default is a random number
+```
 
 ## Contribution
 
@@ -20,3 +33,4 @@ Contributions are very welcome. When you make adjustment for different input vid
 ## License
 
 MIT License (see LICENSE file)
+
