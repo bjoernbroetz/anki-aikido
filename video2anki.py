@@ -117,7 +117,7 @@ def split_video_by_techniques(techniques, path_to_video, dry_run=False):
 
 def append_to_deck(my_deck, techniques, my_model):
     template_answer = """
-<video controls autoplay muted>
+<video width="100%" controls autoplay muted style="max-width:640px" playsinline>
     <source src="{video_to_be_inserted}" type="video/webm">
 </video>
 """
