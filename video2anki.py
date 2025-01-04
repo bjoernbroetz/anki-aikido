@@ -35,7 +35,7 @@ class AikidoTechnique:
         )
 
     def full_name(self):
-        return f"{self.standing_position}<br>{self.attack}<br>{self.name}"
+        return f"{self.standing_position}<br> {self.attack}<br> {self.name}"
 
     def anki_tags(self):
         return (
