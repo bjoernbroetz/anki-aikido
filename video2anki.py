@@ -115,7 +115,7 @@ def split_video_by_techniques(techniques, path_to_video, dry_run=False):
                 subprocess.run(cmd)
 
 
-def append_to_deck(my_deck, techniques, my_model):
+def append_to_deck(_deck, techniques, _model):
     template_answer = """
 <video width="100%" controls autoplay muted style="max-width:640px" playsinline>
     <source src="{video_to_be_inserted}" type="video/webm">
@@ -124,8 +124,8 @@ def append_to_deck(my_deck, techniques, my_model):
 
     videos = []
     for technique in techniques:
-        my_note = genanki.Note(
-            model=my_model,
+        _note = genanki.Note(
+            model=_model,
             fields=[
                 f"{technique.full_name()}",
                 template_answer.format(video_to_be_inserted=technique.webmname()),
@@ -133,14 +133,14 @@ def append_to_deck(my_deck, techniques, my_model):
             ],
             tags=technique.anki_tags(),
         )
-        my_deck.add_note(my_note)
+        _deck.add_note(_note)
         videos.append(f"{VIDEO_FOLDER}/{technique.webmname()}")
-    return (my_deck, videos)
+    return (_deck, videos)
 
 
-def create_deck(my_deck, videos, filename):
+def create_deck(_deck, videos, filename):
     filename = check_filename(filename)
-    pack = genanki.Package(my_deck)
+    pack = genanki.Package(_deck)
     pack.media_files = videos
     pack.write_to_file(f"{filename}.apkg")
 
@@ -150,15 +150,15 @@ def init_anki_model():
         1607392319,
         "Simple Model",
         fields=[
-            {"name": "Question"},
-            {"name": "MyMedia"},
+            {"name": "instruction"},
+            {"name": "video"},
             {"name": "KeepMedia"},
         ],
         templates=[
             {
-                "name": "Card 1",
-                "qfmt": "{{Question}}",
-                "afmt": '{{FrontSide}}<hr id="answer">{{MyMedia}}',
+                "name": "instruction video",
+                "qfmt": "{{instruction}}",
+                "afmt": '{{instruction}}<hr id="answer">{{video}}',
             },
         ],
         css=".card {font-family: arial;font-size: 40px;text-align: right;color: black;background-color: white;}",
@@ -237,10 +237,10 @@ if __name__ == "__main__":
         logger.debug("Read description.")
         description = html.read()
 
-    my_deck = genanki.Deck(
+    _deck = genanki.Deck(
         check_id(args.deckid), "Aikido techniques with videos.", description
     )
-    my_model = init_anki_model()
+    _model = init_anki_model()
     _videos = []
     for config_item, config_parameter in cfg.items():
         logger.info(f"Processing {config_item}")
@@ -263,10 +263,10 @@ if __name__ == "__main__":
             split_video_by_techniques(
                 aikido_techniques, config_parameter["path_to_video"]
             )
-        my_deck, videos = append_to_deck(my_deck, aikido_techniques, my_model)
+        _deck, videos = append_to_deck(_deck, aikido_techniques, _model)
         _videos.extend(videos)
     if args.dryrun:
         logger.info("Dry run: Skipping to write deck to file.")
     else:
         logger.debug("Writing deck to file.")
-        create_deck(my_deck, _videos, args.outfile)
+        create_deck(_deck, _videos, args.outfile)
